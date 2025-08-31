@@ -1,0 +1,137 @@
+{
+  "currency": {
+    "pln": "PLN",
+    "symbol": {
+      "pln": "zł",
+      "usd": "$"
+    },
+    "usd": "USD"
+  },
+  "dashboard": {
+    "currency_conversion": "Konwersja waluty",
+    "currency_error": "Błąd konwersji waluty",
+    "error": "Błąd ładowania dashboardu",
+    "expenses": "Wydatki",
+    "income": "Dochody",
+    "income_vs_expenses": "Dochody vs Wydatki",
+    "loading": "Ładowanie dashboardu",
+    "no_data_available": "Brak dostępnych danych",
+    "no_expenses": "Brak ostatnich wydatków",
+    "no_income": "Brak ostatnich dochodów",
+    "recent_expenses": "Ostatnie Wydatki",
+    "recent_income": "Ostatnie Dochody",
+    "time_ago": {
+      "days_ago": "dni temu",
+      "today": "Dzisiaj",
+      "yesterday": "Wczoraj"
+    },
+    "total": "Suma",
+    "total_balance": "Całkowite Saldo",
+    "welcome_back": "Witaj ponownie"
+  },
+  "expenses": {
+    "actions": {
+      "delete": "Usuń",
+      "edit": "Edytuj"
+    },
+    "add_expense": "Dodaj wydatek",
+    "add_your_first": "Dodaj swój pierwszy wydatek, aby rozpocząć",
+    "categories": {
+      "education": "Edukacja",
+      "entertainment": "Rozrywka",
+      "food": "Jedzenie",
+      "healthcare": "Opieka zdrowotna",
+      "other": "Inne",
+      "shopping": "Zakupy",
+      "transport": "Transport",
+      "utilities": "Media"
+    },
+    "delete_expense": "Usuń wydatek",
+    "edit_expense": "Edytuj wydatek",
+    "form": {
+      "amount": "Kwota (w USD)",
+      "cancel": "Anuluj",
+      "category": "Kategoria",
+      "confirm_delete": "Czy na pewno chcesz usunąć ten wydatek?",
+      "date": "Data",
+      "delete": "Usuń",
+      "notes": "Notatki",
+      "save": "Zapisz",
+      "saving": "Zapisywanie...",
+      "title": "Tytuł"
+    },
+    "no_expenses": "Brak wydatków",
+    "title": "Wydatki"
+  },
+  "income": {
+    "actions": {
+      "delete": "Usuń",
+      "edit": "Edytuj"
+    },
+    "add_income": "Dodaj dochód",
+    "add_your_first": "Dodaj swój pierwszy wpis o dochodach, aby rozpocząć",
+    "categories": {
+      "business": "Biznes",
+      "employment": "Zatrudnienie",
+      "freelance": "Freelance",
+      "investment": "Inwestycje",
+      "other": "Inne",
+      "rental": "Wynajem"
+    },
+    "delete_income": "Usuń dochód",
+    "edit_income": "Edytuj dochód",
+    "form": {
+      "amount": "Kwota (w USD)",
+      "cancel": "Anuluj",
+      "category": "Kategoria",
+      "confirm_delete": "Czy na pewno chcesz usunąć ten wpis o dochodach?",
+      "date": "Data",
+      "delete": "Usuń",
+      "fill_required_fields": "Proszę wypełnić wszystkie wymagane pola",
+      "notes": "Notatki",
+      "save": "Zapisz",
+      "saving": "Zapisywanie...",
+      "title": "Tytuł",
+      "valid_amount": "Proszę wprowadzić prawidłową kwotę"
+    },
+    "no_income": "Brak wpisów o dochodach",
+    "title": "Dochody",
+    "total_income": "Całkowite dochody"
+  },
+  "settings": {
+    "about": "O aplikacji",
+    "app_name": "Nazwa aplikacji",
+    "english": "Angielski",
+    "general": "Ogólne",
+    "github": "Github",
+    "language": "Język",
+    "links": "Linki",
+    "logout": "Wyloguj",
+    "logout_confirm": "Czy na pewno chcesz się wylogować?",
+    "more": "Więcej",
+    "polish": "Polski",
+    "privacy": "Polityka prywatności",
+    "rate": "Oceń",
+    "reset_all_data": "Zresetuj wszystkie dane",
+    "share": "Udostępnij",
+    "support": "Wsparcie",
+    "support_us": "Wesprzyj nas",
+    "terms": "Warunki użytkowania",
+    "theme": {
+      "dark": "Ciemny",
+      "light": "Jasny",
+      "system": "System",
+      "title": "Motyw"
+    },
+    "title": "Ustawienia",
+    "version": "Wersja",
+    "website": "Strona internetowa"
+  },
+  "tabs": {
+    "dashboard": "Dashboard",
+    "expenses": "Wydatki",
+    "income": "Dochody",
+    "settings": "Ustawienia"
+  },
+  "welcome": "Witaj w aplikacji obytes"
+}
