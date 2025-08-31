@@ -39,7 +39,6 @@ const handleOAuthResult = (result: any) => {
       }
     }
 
-    // Check if we have a code in the URL
     if (result.url.includes('code=')) {
       console.log('OAuth code found in URL, session should be established');
       return { error: null };
