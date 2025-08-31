@@ -85,3 +85,31 @@ export function generateUUID(): string {
     return v.toString(16);
   });
 }
+
+/**
+ * Translates expense category from English to Polish if the language is Polish
+ * @param category - The category name in English
+ * @param language - The current language ('en' | 'pl')
+ * @returns The translated category name
+ */
+export function translateExpenseCategory(
+  category: string,
+  language: string
+): string {
+  if (language !== 'pl') {
+    return category;
+  }
+
+  const categoryMap: Record<string, string> = {
+    food: 'Jedzenie',
+    shopping: 'Zakupy',
+    transport: 'Transport',
+    utilities: 'Media',
+    entertainment: 'Rozrywka',
+    healthcare: 'Opieka zdrowotna',
+    education: 'Edukacja',
+    other: 'Inne',
+  };
+
+  return categoryMap[category.toLowerCase()] || category;
+}

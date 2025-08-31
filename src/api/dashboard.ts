@@ -1,4 +1,4 @@
-import type { Expense, Income } from '@/types';
+import type { Expense } from '@/types';
 
 import { dashboardSettingsApi } from './dashboard-settings';
 import { expensesApi } from './expenses';
@@ -9,7 +9,6 @@ export interface DashboardData {
   totalIncome: number;
   totalExpenses: number;
   recentExpenses: Expense[];
-  recentIncome: Income[];
 }
 
 export interface DashboardSummary {
@@ -43,21 +42,11 @@ export const dashboardApi = {
             .slice(0, settings.recentExpensesLimit)
         : [];
 
-      // Get recent income based on settings
-      const recentIncome = settings.showRecentIncome
-        ? income
-            .sort(
-              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-            )
-            .slice(0, settings.recentIncomeLimit)
-        : [];
-
       return {
         totalBalance,
         totalIncome,
         totalExpenses,
         recentExpenses,
-        recentIncome,
       };
     } catch (error) {
       throw new Error(`Failed to fetch dashboard data: ${error}`);
@@ -98,21 +87,6 @@ export const dashboardApi = {
         .slice(0, expensesLimit);
     } catch (error) {
       throw new Error(`Failed to fetch recent expenses: ${error}`);
-    }
-  },
-
-  // Get recent income with configurable limit
-  async getRecentIncome(limit?: number): Promise<Income[]> {
-    try {
-      const settings = await dashboardSettingsApi.getDashboardSettings();
-      const incomeLimit = limit || settings.recentIncomeLimit;
-
-      const income = await incomeApi.getIncome();
-      return income
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        .slice(0, incomeLimit);
-    } catch (error) {
-      throw new Error(`Failed to fetch recent income: ${error}`);
     }
   },
 };

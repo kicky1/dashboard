@@ -8,6 +8,7 @@
     "usd": "USD"
   },
   "dashboard": {
+    "charts": "Wykresy",
     "currency_conversion": "Konwersja waluty",
     "currency_error": "Błąd konwersji waluty",
     "error": "Błąd ładowania dashboardu",
@@ -18,13 +19,16 @@
     "no_data_available": "Brak dostępnych danych",
     "no_expenses": "Brak ostatnich wydatków",
     "no_income": "Brak ostatnich dochodów",
+    "quick_actions": "Szybkie akcje",
     "recent_expenses": "Ostatnie Wydatki",
     "recent_income": "Ostatnie Dochody",
+    "recent_transactions": "Ostatnie transakcje",
     "time_ago": {
       "days_ago": "dni temu",
       "today": "Dzisiaj",
       "yesterday": "Wczoraj"
     },
+    "title": "Saldo",
     "total": "Suma",
     "total_balance": "Całkowite Saldo",
     "welcome_back": "Witaj ponownie"
@@ -55,6 +59,7 @@
       "confirm_delete": "Czy na pewno chcesz usunąć ten wydatek?",
       "date": "Data",
       "delete": "Usuń",
+      "enter_title": "Wprowadź tytuł wydatku",
       "notes": "Notatki",
       "save": "Zapisz",
       "saving": "Zapisywanie...",
@@ -101,6 +106,7 @@
   "settings": {
     "about": "O aplikacji",
     "app_name": "Nazwa aplikacji",
+    "development": "Rozwój i testowanie",
     "english": "Angielski",
     "general": "Ogólne",
     "github": "Github",
@@ -114,6 +120,21 @@
     "rate": "Oceń",
     "reset_all_data": "Zresetuj wszystkie dane",
     "share": "Udostępnij",
+    "simulation": {
+      "config_1": "Główny Dashboard + Wykresy",
+      "config_2": "Główny Dashboard + Ostatnie transakcje",
+      "description": "Kliknij, aby rozpocząć przełączanie między 2 układami dashboard: Główny Dashboard + Wykresy, lub Główny Dashboard + Ostatnie transakcje",
+      "help_text": "Symulacja przełącza między 2 układami: Główny Dashboard + Wykresy, lub Główny Dashboard + Ostatnie transakcje. Główny dashboard (dochody/wydatki/saldo) zawsze pozostaje widoczny.",
+      "running": "Przełączanie między wykresami a ostatnimi transakcjami",
+      "settings_updated": "Ustawienia dashboard mock zaktualizowane",
+      "simulation_started": "Symulacja mock rozpoczęta - przełączanie między 2 układami dashboard co",
+      "simulation_stopped": "Symulacja mock zatrzymana - dashboard zresetowany do początkowego układu",
+      "start_5min": "Start (5min)",
+      "start_fast": "Szybko (30s)",
+      "stop": "Zatrzymaj symulację",
+      "switched_to": "Dashboard przełączony na konfigurację",
+      "title": "Symulacja ustawień mock"
+    },
     "support": "Wsparcie",
     "support_us": "Wesprzyj nas",
     "terms": "Warunki użytkowania",
