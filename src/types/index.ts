@@ -237,9 +237,7 @@ export interface DashboardSettings {
 
   // Recent items settings
   showRecentExpenses: boolean;
-  showRecentIncome: boolean;
   recentExpensesLimit: number;
-  recentIncomeLimit: number;
 
   // Layout settings
   showUserHeader: boolean;
@@ -250,9 +248,9 @@ export interface DashboardSettings {
   showQuickActions: boolean;
   showCharts: boolean;
 
-  // Customization
-  dashboardTitle: string;
-  welcomeMessage: string;
+  // Customization - using translation keys
+  dashboardTitleKey: string;
+  welcomeMessageKey: string;
 
   // Feature toggles
   enableNotifications: boolean;

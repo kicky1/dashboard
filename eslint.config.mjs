@@ -9,7 +9,7 @@ import reactCompiler from 'eslint-plugin-react-compiler';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import tailwind from 'eslint-plugin-tailwindcss';
 import testingLibrary from 'eslint-plugin-testing-library';
-// eslint-disable-next-line import/no-named-as-default, import/no-named-as-default-member, import/namespace
+// eslint-disable-next-line import/no-named-as-default, import/namespace
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import unusedImports from 'eslint-plugin-unused-imports';
 import { configs, parser } from 'typescript-eslint';
@@ -75,6 +75,7 @@ export default defineConfig([
       ],
       'import/prefer-default-export': 'off',
       'import/no-cycle': ['error', { maxDepth: '∞' }],
+      'import/no-named-as-default-member': 'off',
       'prettier/prettier': ['error', { ignores: ['expo-env.d.ts'] }],
     },
   },
@@ -90,12 +91,21 @@ export default defineConfig([
     rules: {
       ...configs.recommended.rules,
       '@typescript-eslint/comma-dangle': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/consistent-type-imports': [
         'warn',
         {
           prefer: 'type-imports',
           fixStyle: 'inline-type-imports',
-          disallowTypeAnnotations: true,
+          disallowTypeAnnotations: false,
         },
       ],
     },

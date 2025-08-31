@@ -414,7 +414,7 @@ function IncomeList({
 
   return (
     <View className="flex-1 px-4">
-      <View className="space-y-3">
+      <View className="mb-4 gap-2 space-y-3">
         {income.map((incomeItem) => (
           <IncomeCard
             key={incomeItem.id}
@@ -510,11 +510,7 @@ function IncomeForm({
             {translate('income.form.cancel')}
           </Text>
         </Button>
-        <Button
-          onPress={onSave}
-          className="flex-1 bg-green-500"
-          disabled={isLoading}
-        >
+        <Button onPress={onSave} className="flex-1" disabled={isLoading}>
           <Text className="text-neutral-300 dark:text-neutral-700">
             {isLoading
               ? translate('income.form.saving')
@@ -552,7 +548,10 @@ function IncomeCard({ income, currency, onEdit, onDelete }: IncomeCardProps) {
   };
 
   const getCategoryLabel = (category: string) => {
-    return category.charAt(0).toUpperCase() + category.slice(1);
+    const categoryItem = INCOME_CATEGORIES.find(
+      (cat) => cat.value === category
+    );
+    return categoryItem ? translate(categoryItem.label) : category;
   };
 
   return (

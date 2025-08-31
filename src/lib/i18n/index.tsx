@@ -25,4 +25,10 @@ I18nManager.allowRTL(isRTL);
 I18nManager.forceRTL(isRTL);
 
 export default i18n;
-export * from './utils';
+export type { TxKeyPath } from './utils';
+export {
+  changeLanguage,
+  getLanguage,
+  translate,
+  useSelectedLanguage,
+} from './utils';

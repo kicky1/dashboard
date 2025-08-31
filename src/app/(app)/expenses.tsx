@@ -415,8 +415,8 @@ function ExpensesList({
   }
 
   return (
-    <View className="flex-1 px-4">
-      <View className="space-y-3">
+    <View className="mb-4 flex-1 px-4">
+      <View className="mb-4 gap-2 space-y-3">
         {expenses.map((expense) => (
           <ExpenseCard
             key={expense.id}
@@ -474,7 +474,7 @@ function ExpenseForm({
           label={translate('expenses.form.title')}
           value={formData.title}
           onChangeText={handleTitleChange}
-          placeholder="Enter expense title"
+          placeholder={translate('expenses.form.enter_title')}
         />
 
         <Input

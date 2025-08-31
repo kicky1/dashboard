@@ -18,23 +18,41 @@ import {
 } from '@/lib/hooks/use-currency-conversion';
 import { useDashboardData } from '@/lib/hooks/use-dashboard-data';
 import { useDashboardSettings } from '@/lib/hooks/use-dashboard-settings';
+import { translateExpenseCategory } from '@/lib/utils';
 import type { Expense } from '@/types';
 
 // Helper function to format expense date
 function formatExpenseDate(dateString: string): string {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  // Parse the date string and create a date object
+  const expenseDate = new Date(dateString + 'T00:00:00');
 
-  if (diffDays === 0) {
+  // Get today's date at midnight (start of day)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Get yesterday's date at midnight
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  // Get the expense date at midnight
+  const expenseDateMidnight = new Date(expenseDate);
+  expenseDateMidnight.setHours(0, 0, 0, 0);
+
+  // Compare dates
+  if (expenseDateMidnight.getTime() === today.getTime()) {
     return translate('dashboard.time_ago.today');
-  } else if (diffDays === 1) {
+  } else if (expenseDateMidnight.getTime() === yesterday.getTime()) {
     return translate('dashboard.time_ago.yesterday');
-  } else if (diffDays < 7) {
-    return `${diffDays} ${translate('dashboard.time_ago.days_ago')}`;
   } else {
-    return date.toLocaleDateString();
+    // Calculate days difference for dates older than yesterday
+    const diffTime = today.getTime() - expenseDateMidnight.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 7) {
+      return `${diffDays} ${translate('dashboard.time_ago.days_ago')}`;
+    } else {
+      return expenseDate.toLocaleDateString();
+    }
   }
 }
 
@@ -107,12 +125,7 @@ export default function Dashboard() {
       expenses: dashboardData.totalExpenses,
       recentExpenses: dashboardData.recentExpenses,
     };
-  }, [
-    dashboardData?.totalBalance,
-    dashboardData?.totalIncome,
-    dashboardData?.totalExpenses,
-    dashboardData?.recentExpenses,
-  ]);
+  }, [dashboardData]);
 
   // Convert amounts using the exchange rate
   const convertedAmounts = useMemo(() => {
@@ -163,6 +176,7 @@ export default function Dashboard() {
       <FocusAwareStatusBar />
       <ScrollView className="flex-1">
         {dashboardSettings.showUserHeader && <UserHeader user={mockUser} />}
+
         {dashboardSettings.showBalanceCard && (
           <BalanceCard
             amounts={convertedAmounts}
@@ -179,13 +193,6 @@ export default function Dashboard() {
         {dashboardSettings.showRecentExpenses && (
           <RecentExpenses
             expenses={convertedAmounts.recentExpenses}
-            currency={currency}
-            _settings={dashboardSettings}
-          />
-        )}
-        {dashboardSettings.showRecentIncome && dashboardData?.recentIncome && (
-          <RecentIncome
-            income={dashboardData.recentIncome}
             currency={currency}
             _settings={dashboardSettings}
           />
@@ -240,13 +247,13 @@ function BalanceCard({
 
   return (
     <View className="mb-6 px-4">
-      <View className="rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+      <View className="rounded-2xl p-6">
         {settings.showTotalBalance && (
           <>
-            <Text className="mb-2 text-lg font-medium text-white">
-              {settings.dashboardTitle || translate('dashboard.total_balance')}
+            <Text className="mb-2 text-lg font-medium text-neutral-900 dark:text-white">
+              {translate('dashboard.title')}
             </Text>
-            <Text className="mb-4 text-3xl font-bold text-white">
+            <Text className="mb-4 text-3xl font-bold text-neutral-900 dark:text-white">
               {currencyService.formatAmount(amounts.totalBalance, currency)}
             </Text>
           </>
@@ -254,20 +261,20 @@ function BalanceCard({
         <View className="flex-row justify-between">
           {settings.showIncome && (
             <View>
-              <Text className="text-sm text-blue-100">
+              <Text className="text-sm text-neutral-900 dark:text-blue-100">
                 {translate('dashboard.income')}
               </Text>
-              <Text className="font-semibold text-white">
+              <Text className="font-semibold text-neutral-900 dark:text-white">
                 +{currencyService.formatAmount(amounts.income, currency)}
               </Text>
             </View>
           )}
           {settings.showExpenses && (
             <View>
-              <Text className="text-sm text-blue-100">
+              <Text className="text-sm text-neutral-900 dark:text-blue-100">
                 {translate('dashboard.expenses')}
               </Text>
-              <Text className="font-semibold text-white">
+              <Text className="font-semibold text-neutral-900 dark:text-white">
                 -{currencyService.formatAmount(amounts.expenses, currency)}
               </Text>
             </View>
@@ -325,50 +332,6 @@ function RecentExpenses({
   );
 }
 
-function RecentIncome({
-  income,
-  currency,
-  _settings,
-}: {
-  income: import('@/types').Income[];
-  currency: Currency;
-  _settings: import('@/types').DashboardSettings;
-}) {
-  if (!income || income.length === 0) {
-    return (
-      <View className="mb-6 px-4">
-        <Text className="mb-4 text-xl font-bold text-neutral-900 dark:text-white">
-          {translate('dashboard.recent_income')}
-        </Text>
-        <View className="rounded-xl bg-white p-4 dark:bg-neutral-800">
-          <Text className="text-center text-neutral-600 dark:text-neutral-400">
-            {translate('dashboard.no_income')}
-          </Text>
-        </View>
-      </View>
-    );
-  }
-
-  return (
-    <View className="mb-6 px-4">
-      <Text className="mb-4 text-xl font-bold text-neutral-900 dark:text-white">
-        {translate('dashboard.recent_income')}
-      </Text>
-      <View className="gap-3 space-y-3">
-        {income.map((inc) => (
-          <IncomeItem
-            key={inc.id}
-            title={inc.title}
-            amount={currencyService.formatAmount(inc.amount, currency)}
-            category={inc.category}
-            income_date={formatExpenseDate(inc.date)}
-          />
-        ))}
-      </View>
-    </View>
-  );
-}
-
 type ExpenseItemProps = {
   title: string;
   amount: string;
@@ -382,6 +345,8 @@ function ExpenseItem({
   category,
   expense_date,
 }: ExpenseItemProps) {
+  const { language } = useSelectedLanguage();
+
   return (
     <View className="flex-row items-center justify-between rounded-xl bg-white p-4 dark:bg-neutral-800">
       <View className="flex-1">
@@ -389,33 +354,10 @@ function ExpenseItem({
           {title}
         </Text>
         <Text className="text-sm text-neutral-600 dark:text-neutral-400">
-          {category} • {expense_date}
+          {translateExpenseCategory(category, language)} • {expense_date}
         </Text>
       </View>
       <Text className="text-lg font-semibold text-red-500">{amount}</Text>
-    </View>
-  );
-}
-
-type IncomeItemProps = {
-  title: string;
-  amount: string;
-  category: string;
-  income_date: string;
-};
-
-function IncomeItem({ title, amount, category, income_date }: IncomeItemProps) {
-  return (
-    <View className="flex-row items-center justify-between rounded-xl bg-white p-4 dark:bg-neutral-800">
-      <View className="flex-1">
-        <Text className="font-medium text-neutral-900 dark:text-white">
-          {title}
-        </Text>
-        <Text className="text-sm text-neutral-600 dark:text-neutral-400">
-          {category} • {income_date}
-        </Text>
-      </View>
-      <Text className="text-lg font-semibold text-green-500">+{amount}</Text>
     </View>
   );
 }
