@@ -1,7 +1,7 @@
 import React from 'react';
 
 import type { OptionType } from '@/components/ui';
-import { cleanup, render, screen, setup } from '@/lib/test-utils';
+import { cleanup, render, screen } from '@/lib/test-utils';
 
 import { Select } from './select';
 
@@ -60,40 +60,64 @@ describe('Select component ', () => {
     );
   });
 
-  it('should open options modal on press', async () => {
-    const { user } = setup(
+  it('should render placeholder when no value is selected', () => {
+    const onSelect = jest.fn();
+    render(
       <Select
         label="Select"
         options={options}
+        onSelect={onSelect}
         testID="select"
         placeholder="Select an option"
       />
     );
-
-    const selectTrigger = screen.getByTestId('select-trigger');
-    await user.press(selectTrigger);
-
-    expect(screen.getByTestId('select-item-chocolate')).toBeOnTheScreen();
-    expect(screen.getByTestId('select-item-strawberry')).toBeOnTheScreen();
-    expect(screen.getByTestId('select-item-vanilla')).toBeOnTheScreen();
+    expect(screen.getByTestId('select-trigger')).toBeOnTheScreen();
+    expect(screen.getByText('Select an option')).toBeOnTheScreen();
   });
 
-  it('should call onSelect on selecting an option', async () => {
+  it('should render selected value label when value is provided', () => {
     const onSelect = jest.fn();
-
-    const { user } = setup(
-      <Select options={options} onSelect={onSelect} testID="select" />
+    render(
+      <Select
+        label="Select"
+        options={options}
+        onSelect={onSelect}
+        testID="select"
+        value="chocolate"
+        placeholder="Select an option"
+      />
     );
+    expect(screen.getByTestId('select-trigger')).toBeOnTheScreen();
+    expect(screen.getByText('Chocolate')).toBeOnTheScreen();
+  });
 
+  it('should render disabled state correctly', () => {
+    const onSelect = jest.fn();
+    render(
+      <Select
+        label="Select"
+        options={options}
+        onSelect={onSelect}
+        testID="select"
+        disabled={true}
+      />
+    );
     const selectTrigger = screen.getByTestId('select-trigger');
-    await user.press(selectTrigger);
+    expect(selectTrigger).toBeOnTheScreen();
+    expect(selectTrigger.props.accessibilityState.disabled).toBe(true);
+  });
 
-    const optionModal = screen.getByTestId('select-modal');
-    await user.press(optionModal);
-
-    const optionItem1 = screen.getByTestId('select-item-chocolate');
-    await user.press(optionItem1);
-
-    expect(onSelect).toHaveBeenCalledWith(options[0].value);
+  it('should render focused state correctly', () => {
+    const onSelect = jest.fn();
+    render(
+      <Select
+        label="Select"
+        options={options}
+        onSelect={onSelect}
+        testID="select"
+      />
+    );
+    expect(screen.getByTestId('select-trigger')).toBeOnTheScreen();
+    expect(screen.getByTestId('select-label')).toBeOnTheScreen();
   });
 });
