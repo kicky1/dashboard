@@ -85,6 +85,8 @@ const performGoogleOAuth = async () => {
           access_type: 'offline',
           prompt: 'consent',
         },
+        // Add these options for better React Native compatibility
+        skipBrowserRedirect: true,
       },
     });
 
@@ -105,13 +107,37 @@ const performGoogleOAuth = async () => {
 
       console.log('WebBrowser result:', result);
 
-      // After OAuth completion, we need to manually exchange the code for a session
+      // Handle the OAuth result
       if (result.type === 'success' && result.url) {
-        console.log(
-          'OAuth completed successfully, need to navigate to callback'
-        );
+        console.log('OAuth completed successfully, processing callback...');
 
-        // Extract the code from the URL
+        // Extract the access token from the URL
+        if (result.url.includes('access_token=')) {
+          const urlParams = new URLSearchParams(result.url.split('#')[1]);
+          const accessToken = urlParams.get('access_token');
+          const refreshToken = urlParams.get('refresh_token');
+
+          if (accessToken) {
+            // Set the session manually
+            const { data: sessionData, error: sessionError } =
+              await supabase.auth.setSession({
+                access_token: accessToken,
+                refresh_token: refreshToken || '',
+              });
+
+            if (sessionError) {
+              console.error('Error setting session:', sessionError);
+              return { error: sessionError };
+            }
+
+            if (sessionData.session) {
+              console.log('Session established successfully');
+              return { error: null };
+            }
+          }
+        }
+
+        // Fallback: try to exchange code if present
         if (result.url.includes('code=')) {
           const urlParams = new URLSearchParams(result.url.split('?')[1]);
           const code = urlParams.get('code');
@@ -121,7 +147,9 @@ const performGoogleOAuth = async () => {
           }
         }
 
-        return { error: null };
+        return {
+          error: { message: 'No valid tokens or code found in callback' },
+        };
       }
 
       return handleOAuthResult(result);

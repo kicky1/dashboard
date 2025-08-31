@@ -13,8 +13,8 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     storage: AsyncStorage,
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: true, // Enable URL session detection
-    flowType: 'pkce',
+    detectSessionInUrl: false, // Disable for React Native
+    flowType: 'implicit', // Change from 'pkce' to 'implicit' for React Native
   },
 });
 
