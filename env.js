@@ -80,7 +80,7 @@ const client = z.object({
   VERSION: z.string(),
 
   // ADD YOUR CLIENT ENV VARS HERE
-  API_URL: z.string(),
+  // API_URL: z.string(), // Commented out - not used, app uses Supabase directly
   VAR_NUMBER: z.number(),
   VAR_BOOL: z.boolean(),
   EXPO_PUBLIC_SUPABASE_URL: z.string(),
@@ -107,7 +107,7 @@ const _clientEnv = {
   VERSION: packageJSON.version,
 
   // ADD YOUR ENV VARS HERE TOO
-  API_URL: process.env.API_URL || 'http://localhost:8081',
+  // API_URL: process.env.API_URL || 'http://localhost:8081', // Commented out - not used, app uses Supabase directly
   VAR_NUMBER: Number(process.env.VAR_NUMBER) || 123,
   VAR_BOOL: process.env.VAR_BOOL === 'true' || true,
   EXPO_PUBLIC_SUPABASE_URL:

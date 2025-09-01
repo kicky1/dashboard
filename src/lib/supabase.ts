@@ -1,21 +1,21 @@
 import 'react-native-url-polyfill/auto';
 
+import { Env } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 
-// For development, use hardcoded values since we can't create .env files
-const supabaseUrl = 'https://sktcnsxhpzqtkyajhywe.supabase.co';
-const supabaseAnonKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNrdGNuc3hocHpxdGt5YWpoeXdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY1NzI4OTgsImV4cCI6MjA3MjE0ODg5OH0.hqmwhIVI7FmZdcxdad5rA1oUBUPCDf1ex8cUlxoepZE';
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    storage: AsyncStorage,
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false, // Disable for React Native
-    flowType: 'implicit', // Change from 'pkce' to 'implicit' for React Native
-  },
-});
+export const supabase = createClient(
+  Env.EXPO_PUBLIC_SUPABASE_URL,
+  Env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+  {
+    auth: {
+      storage: AsyncStorage,
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: false, // Disable for React Native
+      flowType: 'implicit', // Change from 'pkce' to 'implicit' for React Native
+    },
+  }
+);
 
 export type Database = any;
