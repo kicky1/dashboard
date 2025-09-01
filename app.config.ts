@@ -41,6 +41,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     runtimeVersion: '1.0.0',
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
+      CFBundleURLTypes: [
+        {
+          CFBundleURLName: 'auth-callback',
+          CFBundleURLSchemes: ['dashboard-app'],
+        },
+      ],
     },
     associatedDomains: ['applinks:sktcnsxhpzqtkyajhywe.supabase.co'],
   },
@@ -59,6 +65,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         action: 'VIEW',
         autoVerify: true,
         data: [
+          {
+            scheme: 'dashboard-app',
+            host: 'auth-callback',
+          },
           {
             scheme: 'https',
             host: 'sktcnsxhpzqtkyajhywe.supabase.co',
